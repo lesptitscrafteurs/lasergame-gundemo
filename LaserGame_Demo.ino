@@ -251,7 +251,9 @@ void loop() {
     // temps pour plus de précision)
     if (IrReceiver.decode()) {                          // Nous avons reçu quelque chose
       if (IrReceiver.decodedIRData.protocol == NEC) {   // Nous ne traitons que les message envoyés avec le protocol NEC
-        shooted ( IrReceiver.decodedIRData.command, IrReceiver.decodedIRData.address, SHOOT_LOCATION_GUN );
+        if ( IrReceiver.decodedIRData.address != gunUniqId ) { // On fait en sorte de ne pas pouvori se tirer dessus nous même
+          shooted ( IrReceiver.decodedIRData.command, IrReceiver.decodedIRData.address, SHOOT_LOCATION_GUN );
+        }
       }
       IrReceiver.resume();                              // On rend possible le fait de recevoir à nouveau quelque chose
     }
